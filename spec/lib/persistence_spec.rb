@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Elephant::Persistence do
+describe Plyushkin::Persistence do
   let(:service) do
-    service = Elephant::Service::Stub.new
+    service = Plyushkin::Service::Stub.new
     service.put(1,
       { :name   => [{ :value => 5 }] ,
         :weight => [{ :value => 150 }],
@@ -12,15 +12,15 @@ describe Elephant::Persistence do
   end
 
   let(:model) do
-    m = Elephant::Model.new(service)
-    m.register(:name,   Elephant::SimpleValue)
-    m.register(:weight, Elephant::SimpleValue)
-    m.register(:udt,    Elephant::Test::CoordinateValue)
+    m = Plyushkin::Model.new(service)
+    m.register(:name,   Plyushkin::SimpleValue)
+    m.register(:weight, Plyushkin::SimpleValue)
+    m.register(:udt,    Plyushkin::Test::CoordinateValue)
     m
   end
 
   let(:persistence) do
-    p = Elephant::Persistence.new(model)
+    p = Plyushkin::Persistence.new(model)
     p.load(1)
     p
   end
@@ -45,7 +45,7 @@ describe Elephant::Persistence do
     it 'should parse json into an hash of properties' do
       persistence.load(1)
       property = persistence.properties[:name]
-      property.class.should == Elephant::Property
+      property.class.should == Plyushkin::Property
       property.last.value.should == 5
     end
 
@@ -72,7 +72,7 @@ describe Elephant::Persistence do
     end
 
     it "should add an empty array for a property that isn't returned from service" do
-      model.register(:missing_property, Elephant::SimpleValue)
+      model.register(:missing_property, Plyushkin::SimpleValue)
       persistence.properties[:missing_property].all.should == []
     end
   end

@@ -10,28 +10,28 @@ describe ActiveRecord::Base do
 
         member   = clazz.new
         property = member.histprop
-        property.class.should == Elephant::Property
+        property.class.should == Plyushkin::Property
         property.should       == member.histprop
       end
 
       it 'should register a type for a historical property with persistence class' do
         clazz = Class.new(Member) do
           historical_property :histprop
-          historical_property :coordinate, :type => Elephant::Test::CoordinateValue
+          historical_property :coordinate, :type => Plyushkin::Test::CoordinateValue
         end
 
-        clazz.elephant_model.registered_types[:histprop].should be_nil
-        clazz.elephant_model.registered_types[:coordinate].should == Elephant::Test::CoordinateValue
+        clazz.plyushkin_model.registered_types[:histprop].should be_nil
+        clazz.plyushkin_model.registered_types[:coordinate].should == Plyushkin::Test::CoordinateValue
       end
 
       it 'should allow specifying value type' do
         clazz = Class.new(Member) do
-          historical_property :histprop, :type => Elephant::Test::CoordinateValue
+          historical_property :histprop, :type => Plyushkin::Test::CoordinateValue
         end
 
         member = clazz.new
         property = member.histprop
-        property.value_type.should == Elephant::Test::CoordinateValue
+        property.value_type.should == Plyushkin::Test::CoordinateValue
       end
     end
 
@@ -92,7 +92,7 @@ describe ActiveRecord::Base do
     describe '#validates' do
       it 'should not be valid if historical property is not valid' do
         clazz = Class.new(Member) do
-          historical_property :histprop, :type => Elephant::Test::CoordinateValue
+          historical_property :histprop, :type => Plyushkin::Test::CoordinateValue
         end
         clazz.stub(:model_name).and_return(ActiveModel::Name.new(clazz, nil, "test"))
 
@@ -110,7 +110,7 @@ describe ActiveRecord::Base do
         end
       end
 
-      it 'should load elephant persistence after find is called' do
+      it 'should load plyushkin persistence after find is called' do
         member1 = clazz.new
         member1.histprop.create(:value => 5)
         member1.save!

@@ -1,4 +1,4 @@
-class Elephant::Property
+class Plyushkin::Property
   include ActiveModel::Validations
 
   DEFAULT_CALLBACK = lambda{}
@@ -40,7 +40,7 @@ class Elephant::Property
   end
 
   def last
-    @values.last || Elephant::NilValue.new
+    @values.last || Plyushkin::NilValue.new
   end
 
   def empty?
@@ -53,12 +53,12 @@ class Elephant::Property
   end
 
   def value_type
-    @value_type ||= Elephant::SimpleValue
+    @value_type ||= Plyushkin::SimpleValue
   end
 
   def self.build(name, type, values, opts={})
     opts[:type] = type
-    Elephant::Property.new(name, opts).tap do |p|
+    Plyushkin::Property.new(name, opts).tap do |p|
       values.each { |value| p.create(value) }
     end
   end

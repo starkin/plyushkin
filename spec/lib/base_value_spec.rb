@@ -1,21 +1,21 @@
 require 'spec_helper'
 
-describe Elephant::BaseValue do
+describe Plyushkin::BaseValue do
   describe '#valid?' do
     it 'should not be valid user-defined value if validations fail' do
-      value = Elephant::Test::CoordinateValue.new
+      value = Plyushkin::Test::CoordinateValue.new
       value.valid?
       value.errors.count.should == 2
     end
 
     it 'should be valid user-defined value if validations pass' do
-      value = Elephant::Test::CoordinateValue.new(:x => 5, :y => 10)
+      value = Plyushkin::Test::CoordinateValue.new(:x => 5, :y => 10)
       value.valid?
       value.errors.count.should == 0
     end
 
     it 'should not be valid if date is in the future' do
-      value = Elephant::SimpleValue.new(:date => 2.days.from_now)
+      value = Plyushkin::SimpleValue.new(:date => 2.days.from_now)
       value.should_not be_valid
       value.errors.full_messages.should == ["Date cannot be in the future"]
     end
@@ -23,7 +23,7 @@ describe Elephant::BaseValue do
 
   describe '##persisted_attr' do
     it 'should add attribute to persisted_attributes' do
-      clazz = Class.new(Elephant::BaseValue) do
+      clazz = Class.new(Plyushkin::BaseValue) do
         persisted_attr :my_attr
       end
 
@@ -31,7 +31,7 @@ describe Elephant::BaseValue do
     end
 
     it 'should add attributes to persisted_attributes when called multiple times' do
-      clazz = Class.new(Elephant::BaseValue) do
+      clazz = Class.new(Plyushkin::BaseValue) do
         persisted_attr :my_attr
         persisted_attr :my_other_attr
       end
@@ -40,7 +40,7 @@ describe Elephant::BaseValue do
     end
 
     it 'should add attributes to persisted_attributes when called with multiple attributes' do
-      clazz = Class.new(Elephant::BaseValue) do
+      clazz = Class.new(Plyushkin::BaseValue) do
         persisted_attr :my_attr, :my_other_attr
       end
 
@@ -48,7 +48,7 @@ describe Elephant::BaseValue do
     end
 
     it 'should add reader and writer for attribute' do
-      clazz = Class.new(Elephant::BaseValue) do
+      clazz = Class.new(Plyushkin::BaseValue) do
         persisted_attr :my_attr
       end
 
@@ -58,7 +58,7 @@ describe Elephant::BaseValue do
     end
 
     it "should format value readers using format methods when specified" do
-      clazz = Class.new(Elephant::BaseValue) do
+      clazz = Class.new(Plyushkin::BaseValue) do
         persisted_attr :my_attr, :formatter => :to_i
       end
 
@@ -68,7 +68,7 @@ describe Elephant::BaseValue do
     end
     
     it "should format multiple value readers using format methods when specified" do
-      clazz = Class.new(Elephant::BaseValue) do
+      clazz = Class.new(Plyushkin::BaseValue) do
         persisted_attr :my_attr, :my_attr2, :formatter => :to_i
       end
 
@@ -84,7 +84,7 @@ describe Elephant::BaseValue do
 
   describe '#equal_value' do
     it 'should test equality of persisted_attributes' do
-      clazz = Class.new(Elephant::BaseValue) do
+      clazz = Class.new(Plyushkin::BaseValue) do
         persisted_attr :my_attr, :my_attr2
       end
 
@@ -100,7 +100,7 @@ describe Elephant::BaseValue do
     end
 
     it 'should be true if dates are different' do
-      clazz = Class.new(Elephant::BaseValue) do
+      clazz = Class.new(Plyushkin::BaseValue) do
         persisted_attr :my_attr, :my_attr2
       end
 

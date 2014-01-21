@@ -1,4 +1,4 @@
-class Elephant::Model
+class Plyushkin::Model
 
   def initialize(service)
     @service          = service

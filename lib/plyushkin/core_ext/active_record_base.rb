@@ -1,44 +1,44 @@
 ActiveRecord::Base.instance_eval do
   def historical_property(name, opts = {})
-    initialize_elephant
+    initialize_plyushkin
 
     define_method(name) do
-      elephant.properties[name]
+      plyushkin.properties[name]
     end
-    validates name, :elephant => true
+    validates name, :plyushkin => true
 
-    elephant_model.register(name, opts[:type], opts)
-    elephant_model.register_callback(name, :after_create, opts[:after_create]) if opts[:after_create]
+    plyushkin_model.register(name, opts[:type], opts)
+    plyushkin_model.register_callback(name, :after_create, opts[:after_create]) if opts[:after_create]
   end
 
-  def initialize_elephant
+  def initialize_plyushkin
     class << self 
-      def elephant_model
-        @elephant_model ||= Elephant::Model.new(Elephant::Service::Stub.new)
+      def plyushkin_model
+        @plyushkin_model ||= Plyushkin::Model.new(Plyushkin::Service::Stub.new)
       end
     end
 
-    after_initialize :load_elephant
-    after_save :save_elephant
+    after_initialize :load_plyushkin
+    after_save :save_plyushkin
 
-    define_method(:elephant) do
-      @elephant ||= Elephant::Persistence.new(self.class.elephant_model)
+    define_method(:plyushkin) do
+      @plyushkin ||= Plyushkin::Persistence.new(self.class.plyushkin_model)
     end
 
-    define_method(:load_elephant) do
-      self.class.elephant_model.callbacks.each do |name,callbacks|
+    define_method(:load_plyushkin) do
+      self.class.plyushkin_model.callbacks.each do |name,callbacks|
         callbacks.each do |callback, handler|
-          elephant.register_callback(name, callback) do
+          plyushkin.register_callback(name, callback) do
             (handler && handler.is_a?(Symbol)) ? send(handler) : handler.call
           end
         end
       end
 
-      elephant.load(id)
+      plyushkin.load(id)
     end
 
-    define_method(:save_elephant) do
-      elephant.save(id)
+    define_method(:save_plyushkin) do
+      plyushkin.save(id)
     end
   end
 end

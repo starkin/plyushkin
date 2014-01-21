@@ -1,4 +1,4 @@
-class Elephant::Persistence
+class Plyushkin::Persistence
 
   def initialize(model)
     @model = model
@@ -21,7 +21,7 @@ class Elephant::Persistence
   def load(id)
     @properties = {}
     model.service.get(id).each do |name, values| 
-      property = Elephant::Property.build(name, model.registered_types[name.to_sym], values,
+      property = Plyushkin::Property.build(name, model.registered_types[name.to_sym], values,
                                          :callbacks               => @callbacks[name.to_sym],
                                          :ignore_unchanged_values => @model.ignore_unchanged_values[name.to_sym] )
       @properties[name.to_sym] = property
@@ -40,7 +40,7 @@ class Elephant::Persistence
 
   def add_missing_properties
     (model.registered_types.keys - @properties.keys).each do |name|
-      property = Elephant::Property.new(name, 
+      property = Plyushkin::Property.new(name, 
                                         :type                    => model.registered_types[name],
                                         :callbacks               => @callbacks[name],
                                         :ignore_unchanged_values => @model.ignore_unchanged_values[name])

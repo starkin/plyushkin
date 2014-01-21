@@ -1,3 +1,3 @@
-class Elephant::SimpleValue < Elephant::BaseValue
+class Plyushkin::SimpleValue < Plyushkin::BaseValue
   persisted_attr :value
 end

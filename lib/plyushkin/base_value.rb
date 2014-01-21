@@ -1,4 +1,4 @@
-class Elephant::BaseValue
+class Plyushkin::BaseValue
   include ActiveModel::Validations
 
   def initialize(attr={})

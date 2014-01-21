@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Elephant::NilValue do
+describe Plyushkin::NilValue do
   it "should return nil for everything" do
-    n = Elephant::NilValue.new
+    n = Plyushkin::NilValue.new
     n.steve_sucks.should be_nil
     n.apple.should be_nil
     n.value.should be_nil

@@ -1,13 +1,13 @@
 require "plyushkin/version"
 
-module Elephant; end
+module Plyushkin; end
 path = File.dirname(File.expand_path(__FILE__)) 
-require path + "/elephant/lib/base_value"
-require path + "/elephant/lib/simple_value"
-require path + "/elephant/lib/nil_value"
-require path + "/elephant/lib/property"
-require path + "/elephant/lib/model"
-require path + "/elephant/lib/service"
-require path + "/elephant/lib/persistence"
-require path + "/elephant/lib/validators/presence"
-require path + "/elephant/lib/core_ext/active_record_base"
+require path + "/plyushkin/lib/base_value"
+require path + "/plyushkin/lib/simple_value"
+require path + "/plyushkin/lib/nil_value"
+require path + "/plyushkin/lib/property"
+require path + "/plyushkin/lib/model"
+require path + "/plyushkin/lib/service"
+require path + "/plyushkin/lib/persistence"
+require path + "/plyushkin/lib/validators/presence"
+require path + "/plyushkin/lib/core_ext/active_record_base"

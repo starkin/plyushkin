@@ -1,4 +1,4 @@
-class Elephant::Service::Stub
+class Plyushkin::Service::Stub
 
   def initialize
     @store = {}

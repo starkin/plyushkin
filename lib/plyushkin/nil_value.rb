@@ -1,4 +1,4 @@
-class Elephant::NilValue
+class Plyushkin::NilValue
   def method_missing(sym, *args)
     return nil
   end
