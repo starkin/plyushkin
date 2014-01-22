@@ -53,7 +53,7 @@ class Plyushkin::Property
   end
 
   def value_type
-    @value_type ||= Plyushkin::SimpleValue
+    @value_type ||= Plyushkin::StringValue
   end
 
   def self.build(name, type, values, opts={})

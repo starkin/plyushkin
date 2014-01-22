@@ -13,8 +13,8 @@ describe Plyushkin::Persistence do
 
   let(:model) do
     m = Plyushkin::Model.new(service)
-    m.register(:name,   Plyushkin::SimpleValue)
-    m.register(:weight, Plyushkin::SimpleValue)
+    m.register(:name,   Plyushkin::StringValue)
+    m.register(:weight, Plyushkin::StringValue)
     m.register(:udt,    Plyushkin::Test::CoordinateValue)
     m
   end
@@ -72,7 +72,7 @@ describe Plyushkin::Persistence do
     end
 
     it "should add an empty array for a property that isn't returned from service" do
-      model.register(:missing_property, Plyushkin::SimpleValue)
+      model.register(:missing_property, Plyushkin::StringValue)
       persistence.properties[:missing_property].all.should == []
     end
   end

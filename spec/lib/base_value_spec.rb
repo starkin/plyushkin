@@ -15,7 +15,7 @@ describe Plyushkin::BaseValue do
     end
 
     it 'should not be valid if date is in the future' do
-      value = Plyushkin::SimpleValue.new(:date => 2.days.from_now)
+      value = Plyushkin::StringValue.new(:date => 2.days.from_now)
       value.should_not be_valid
       value.errors.full_messages.should == ["Date cannot be in the future"]
     end

@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe Plyushkin::Property do
   describe '#create' do
-    it 'should add a SimpleValue' do
+    it 'should add a StringValue' do
       property = Plyushkin::Property.new(:property_name)
       value = property.create(:value => 5)
-      value.class.should == Plyushkin::SimpleValue
+      value.class.should == Plyushkin::StringValue
     end
 
     it 'should pass the attributes to the simple value' do
