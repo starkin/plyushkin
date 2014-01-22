@@ -20,7 +20,7 @@ class Plyushkin::BaseValue
       define_method(name) do
         value = instance_variable_get("@#{name}")
         if formatter
-          value.send(formatter)
+          send(formatter, value)
         else
           value
         end
@@ -48,5 +48,12 @@ class Plyushkin::BaseValue
     true
   end
 
+  def to_i(value)
+    value.to_i
+  end
+
+  def to_date(value)
+    value.is_a?(String) ? DateTime.parse(value) : value
+  end
 
 end

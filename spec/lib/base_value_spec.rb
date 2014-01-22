@@ -77,7 +77,14 @@ describe Plyushkin::BaseValue do
       value.my_attr2 = "9999"
       value.my_attr.should == 5
       value.my_attr2.should == 9999
+    end
 
+    describe '#to_date' do
+      it 'format a json string to a date' do
+        value = Plyushkin::BaseValue.new
+        now = DateTime.now
+        value.to_date(now.to_json).should === now
+      end
     end
 
   end

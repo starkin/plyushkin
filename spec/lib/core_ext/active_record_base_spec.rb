@@ -107,19 +107,18 @@ describe ActiveRecord::Base do
     describe '#save' do
       let(:clazz) do
         clazz = Class.new(Plyushkin::Test::Member) do
-          hoards :login_date
+          hoards :login_date, :type => Plyushkin::Test::DateValue
         end
       end
 
       it 'should load plyushkin persistence after find is called' do
-        pending
         member1 = clazz.new
         now = DateTime.now
         member1.login_date.create(:value => now)
         member1.save!
 
         member2 = clazz.find(member1.id)
-        member2.login_date.last.value.should == now
+        member2.login_date.last.value.should === now
       end
 
       it 'should save hoarding property by id' do
@@ -133,8 +132,8 @@ describe ActiveRecord::Base do
         member2.login_date.create(:value => later)
         member2.save!
         
-        member1.reload.login_date.last.value.should == now
-        member2.reload.login_date.last.value.should == later
+        member1.reload.login_date.last.value.should === now
+        member2.reload.login_date.last.value.should === later
       end
     end
 

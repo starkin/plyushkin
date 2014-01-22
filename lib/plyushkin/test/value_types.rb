@@ -10,4 +10,8 @@ module Plyushkin::Test
   end
 
   class Plyushkin::Test::Member < ActiveRecord::Base; end
+
+  class Plyushkin::Test::DateValue < Plyushkin::BaseValue
+    persisted_attr :value, :formatter => :to_date
+  end
 end
