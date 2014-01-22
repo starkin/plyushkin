@@ -6,11 +6,11 @@ require 'plyushkin/version'
 Gem::Specification.new do |spec|
   spec.name          = "plyushkin"
   spec.version       = Plyushkin::VERSION
-  spec.authors       = ["Craig Israel"]
-  spec.email         = ["craig_israel@onlifehealth.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.authors       = ["Craig Israel", "Jeremy Hinkle"]
+  spec.email         = ["craig@theisraels.net", "jchinkle@gmail.com"]
+  spec.description   = %q{Provides active record extension to capture historical property data}
+  spec.summary       = %q{Plyushkin - the attribute hoarder}
+  spec.homepage      = "http://github.com/OnlifeHealth/plyushkin"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
