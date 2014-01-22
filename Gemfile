@@ -7,4 +7,5 @@ group :test do
   gem 'rspec'
   gem 'timecop'
   gem 'pry-nav'
+  gem 'sqlite3'
 end

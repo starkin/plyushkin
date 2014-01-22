@@ -4,8 +4,12 @@
 # loaded once.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-require File.dirname(File.expand_path(__FILE__)) + '/../lib/plyushkin'
-require File.dirname(File.expand_path(__FILE__)) + '/../lib/plyushkin/test'
+
+path = File.dirname(File.expand_path(__FILE__))
+require path + '/../lib/plyushkin'
+require path + '/../lib/plyushkin/test'
+Dir[path + "/support/**/*.rb"].each{ |f| require f }
+
 require 'timecop'
 
 RSpec.configure do |config|
@@ -19,3 +23,4 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = 'random'
 end
+

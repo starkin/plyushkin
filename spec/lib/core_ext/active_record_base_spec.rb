@@ -4,7 +4,7 @@ describe ActiveRecord::Base do
   describe '##historical_property' do
     describe 'read' do
       it 'should return the same property instance when called multiple times' do
-        clazz = Class.new(Member) do
+        clazz = Class.new(Plyushkin::Test::Member) do
           historical_property :histprop
         end
 
@@ -15,7 +15,7 @@ describe ActiveRecord::Base do
       end
 
       it 'should register a type for a historical property with persistence class' do
-        clazz = Class.new(Member) do
+        clazz = Class.new(Plyushkin::Test::Member) do
           historical_property :histprop
           historical_property :coordinate, :type => Plyushkin::Test::CoordinateValue
         end
@@ -25,7 +25,7 @@ describe ActiveRecord::Base do
       end
 
       it 'should allow specifying value type' do
-        clazz = Class.new(Member) do
+        clazz = Class.new(Plyushkin::Test::Member) do
           historical_property :histprop, :type => Plyushkin::Test::CoordinateValue
         end
 
@@ -37,7 +37,7 @@ describe ActiveRecord::Base do
 
     describe 'after_create option' do
       it 'should call method specified by option after property create is called' do
-        clazz = Class.new(Member) do
+        clazz = Class.new(Plyushkin::Test::Member) do
           attr_accessor :histprop_created_called
           historical_property :histprop, :after_create => :histprop_created
 
@@ -52,7 +52,7 @@ describe ActiveRecord::Base do
       end
 
       it 'should call method specified by option after property create is called for the property named' do
-        clazz = Class.new(Member) do
+        clazz = Class.new(Plyushkin::Test::Member) do
           attr_accessor :histprop_created_called, :other_prop_created_called
 
           historical_property :histprop,   :after_create => :histprop_created
@@ -76,7 +76,7 @@ describe ActiveRecord::Base do
 
     describe 'ignore_unchanged_value option' do
       it 'should not add a value when ignore_unchanged_value is true and value is the same as the last value' do
-        clazz = Class.new(Member) do
+        clazz = Class.new(Plyushkin::Test::Member) do
           historical_property :histprop, :ignore_unchanged_values => true
         end
 
@@ -91,7 +91,7 @@ describe ActiveRecord::Base do
 
     describe '#validates' do
       it 'should not be valid if historical property is not valid' do
-        clazz = Class.new(Member) do
+        clazz = Class.new(Plyushkin::Test::Member) do
           historical_property :histprop, :type => Plyushkin::Test::CoordinateValue
         end
         clazz.stub(:model_name).and_return(ActiveModel::Name.new(clazz, nil, "test"))
@@ -105,7 +105,7 @@ describe ActiveRecord::Base do
 
     describe '#save' do
       let(:clazz) do
-        clazz = Class.new(Member) do
+        clazz = Class.new(Plyushkin::Test::Member) do
           historical_property :histprop
         end
       end

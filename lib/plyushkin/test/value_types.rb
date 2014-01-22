@@ -8,4 +8,6 @@ module Plyushkin::Test
     persisted_attr :x, :y
     validates :x, :y, :presence => true
   end
+
+  class Plyushkin::Test::Member < ActiveRecord::Base; end
 end
