@@ -140,19 +140,19 @@ describe ActiveRecord::Base do
     describe '#reload' do
       let(:clazz) do
         clazz = Class.new(Plyushkin::Test::Member) do
-          hoards :login_date
+          hoards :login_date, :type => Plyushkin::Test::DateValue
         end
       end
 
       it 'should reload new data from persisted store' do
-        pending
         member = clazz.new
         now = DateTime.now
         member.login_date.create(:value => now)
         member.save!
         member.login_date.create(:value => now + 5)
 
-        member.reload.login_date.last.value.should == now
+        member.reload
+        member.login_date.last.value.should === now
       end
     end
 

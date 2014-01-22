@@ -5,7 +5,6 @@ class Plyushkin::Persistence
     @callbacks = {}
   end
 
-  # instance start
   def properties
     @properties
   end

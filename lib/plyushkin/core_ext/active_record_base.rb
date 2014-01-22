@@ -18,28 +18,10 @@ ActiveRecord::Base.instance_eval do
       end
     end
 
+    include PlyushkinExtensions
+
     after_initialize :load_plyushkin
     after_save :save_plyushkin
-
-    define_method(:plyushkin) do
-      @plyushkin ||= Plyushkin::Persistence.new(self.class.plyushkin_model)
-    end
-
-    define_method(:load_plyushkin) do
-      self.class.plyushkin_model.callbacks.each do |name,callbacks|
-        callbacks.each do |callback, handler|
-          plyushkin.register_callback(name, callback) do
-            (handler && handler.is_a?(Symbol)) ? send(handler) : handler.call
-          end
-        end
-      end
-
-      plyushkin.load(id)
-    end
-
-    define_method(:save_plyushkin) do
-      plyushkin.save(id)
-    end
   end
 end
 
