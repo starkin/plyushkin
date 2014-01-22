@@ -4,7 +4,7 @@ describe Plyushkin::Persistence do
   let(:service) do
     service = Plyushkin::Service::Stub.new
     service.put(1,
-      { :name   => [{ :value => 5 }] ,
+      { :name   => [{ :value => "Steve" }] ,
         :weight => [{ :value => 150 }],
         :udt    => [{ :x => 10, :y => 20 }]
       }.to_json)
@@ -34,10 +34,10 @@ describe Plyushkin::Persistence do
 
   describe '#save' do
     it 'should save to source that load uses' do
-      persistence.properties[:name].create(:value => 2)
+      persistence.properties[:name].create(:value => "Mike")
       persistence.save(1)
       persistence.load(1)
-      persistence.properties[:name].last.value.should == 2
+      persistence.properties[:name].last.value.should == "Mike"
     end
   end
 
@@ -46,7 +46,7 @@ describe Plyushkin::Persistence do
       persistence.load(1)
       property = persistence.properties[:name]
       property.class.should == Plyushkin::Property
-      property.last.value.should == 5
+      property.last.value.should == "Steve"
     end
 
     it 'should parse json for a user-defined type' do
@@ -60,15 +60,15 @@ describe Plyushkin::Persistence do
       service.put(1,
         {
           :name => [
-            { :value => 5,  :date => DateTime.now - 2.days },
-            { :value => 10, :date => DateTime.now - 3.days }
+            { :value => "Ms. Julie Jones",  :date => DateTime.now - 2.days },
+            { :value => "Mrs. Julie Smith", :date => DateTime.now - 3.days }
           ]
       }.to_json)
 
       property = persistence.properties[:name]
       property.all.length.should == 2
-      property.all[0].value.should == 10
-      property.all[1].value.should == 5
+      property.all[0].value.should == "Mrs. Julie Smith"
+      property.all[1].value.should == "Ms. Julie Jones"
     end
 
     it "should add an empty array for a property that isn't returned from service" do

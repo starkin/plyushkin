@@ -1,5 +1,5 @@
 ActiveRecord::Base.instance_eval do
-  def historical_property(name, opts = {})
+  def hoards(name, opts = {})
     initialize_plyushkin
 
     define_method(name) do

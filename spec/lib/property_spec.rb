@@ -104,21 +104,21 @@ describe Plyushkin::Property do
     end
 
     it 'should populate errors from values when not valid' do
-      property = Plyushkin::Property.new(:histprop, :type => Plyushkin::Test::PresenceTestValue)
+      property = Plyushkin::Property.new(:property_name, :type => Plyushkin::Test::PresenceTestValue)
       property.create
       property.valid?
-      property.errors.full_messages.should == [ "Histprop: Value can't be blank" ]
+      property.errors.full_messages.should == [ "PropertyName: Value can't be blank" ]
     end
   end
 
   describe '#empty?' do
     it 'should return true if no values were created' do
-      property = Plyushkin::Property.new(:histprop, :type => Plyushkin::Test::PresenceTestValue)
+      property = Plyushkin::Property.new(:property_name, :type => Plyushkin::Test::PresenceTestValue)
       property.should be_empty
     end
 
     it 'should return false if values were not created' do
-      property = Plyushkin::Property.new(:histprop, :type => Plyushkin::Test::PresenceTestValue)
+      property = Plyushkin::Property.new(:property_name, :type => Plyushkin::Test::PresenceTestValue)
       property.create
       property.should_not be_empty
     end
