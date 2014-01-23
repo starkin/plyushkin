@@ -12,7 +12,7 @@ class Plyushkin::Persistence
   def save(id)
     hash = {}
     (@properties || {}).each do |name, property|
-      hash[name] = [property.value_hashes]
+      hash[name] = property.value_hashes
     end
     model.service.put(id, hash.to_json)
   end

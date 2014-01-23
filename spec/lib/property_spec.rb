@@ -51,6 +51,49 @@ describe Plyushkin::Property do
         property.all.length.should == 1
       end
     end
+
+    describe 'ignore_invalid option' do
+      it 'should not create a value if value is invalid and option is true' do
+        property = Plyushkin::Property.new(:property_name, :type => Plyushkin::Test::PresenceTestValue)
+        property.create(:ignore_invalid => true )
+        property.all.length.should == 0
+        property.should be_valid
+      end
+
+      it 'should create a value if the value is invalid and the option is not provided' do
+        property = Plyushkin::Property.new(:property_name,
+                                          :type => Plyushkin::Test::PresenceTestValue)
+        property.create
+        property.all.length.should == 1
+        property.should_not be_valid
+      end
+
+      it 'should create a value if the value is valid and the option is true' do
+        property = Plyushkin::Property.new(:property_name,
+                                          :type => Plyushkin::Test::PresenceTestValue)
+        property.create(:value => 5, :ignore_invalid => true)
+        property.all.length.should == 1
+        property.should be_valid
+      end
+    end
+
+    describe 'without_callbacks' do
+      it 'should not run callbacks if option is true' do
+        called = 0
+        callbacks = { :after_create => lambda{ called += 1 } }
+        property = Plyushkin::Property.new(:property_name, :callbacks => callbacks)
+        property.create(:value => 5, :without_callbacks => true)
+        called.should == 0
+      end
+
+      it 'should run callbacks if option is false' do
+        called = 0
+        callbacks = { :after_create => lambda{ called += 1 } }
+        property = Plyushkin::Property.new(:property_name, :callbacks => callbacks)
+        property.create(:value => 5, :without_callbacks => false)
+        called.should == 1
+      end
+    end
   end
 
   describe '#all' do

@@ -36,7 +36,7 @@ class Plyushkin::BaseValue
     end
   end
 
- persisted_attr :date
+ persisted_attr :date, :formatter => :to_date
   validates_each :date do |record, attr_name, value|
     record.errors.add(attr_name, "cannot be in the future") unless value < DateTime.now
   end

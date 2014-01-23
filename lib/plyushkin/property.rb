@@ -20,14 +20,19 @@ class Plyushkin::Property
   end
 
   def create(attr={})
+    #write a spec for this option
+    ignore_invalid = attr.delete(:ignore_invalid)
     value = value_type.new(attr)
     if @ignore_unchanged_values
       last = @values.last
       return last if last && last.equal_value?(value)
     end
 
+    return if !value.valid? && ignore_invalid
+
     @values.insert(insert_position(value.date), value)
-    trigger_callback(:after_create)
+    #write a spec for this option
+    trigger_callback(:after_create) unless attr[:without_callbacks]
     value
   end
 
@@ -58,9 +63,11 @@ class Plyushkin::Property
 
   def self.build(name, type, values, opts={})
     opts[:type] = type
-    Plyushkin::Property.new(name, opts).tap do |p|
-      values.each { |value| p.create(value) }
+    prop = Plyushkin::Property.new(name, opts).tap do |p|
+      values.each { |value| p.create(value.merge(:without_callbacks => true)) }
     end
+
+    prop
   end
 
   def value_hashes
@@ -71,6 +78,6 @@ class Plyushkin::Property
       end
     end
 
-    value_hashes
+    value_hashes == {} ? [] : [value_hashes]
   end
 end
