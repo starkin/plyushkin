@@ -8,8 +8,8 @@ class Plyushkin::Service::Stub
     JSON.parse(@store[id] || "{}")
   end
 
-  def put(id, json)
-    @store[id] = json
+  def put(id, payload)
+    @store[id] = payload.to_json
   end
 
 end

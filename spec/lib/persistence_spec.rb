@@ -2,12 +2,12 @@ require 'spec_helper'
 
 describe Plyushkin::Persistence do
   let(:service) do
-    service = Plyushkin::Service::Stub.new
+    service = Plyushkin::Service.service
     service.put(1,
       { :name   => [{ :value => "Steve" }] ,
         :weight => [{ :value => 150 }],
         :udt    => [{ :x => 10, :y => 20 }]
-      }.to_json)
+      })
     service
   end
 
@@ -63,7 +63,7 @@ describe Plyushkin::Persistence do
             { :value => "Ms. Julie Jones",  :date => DateTime.now - 2.days },
             { :value => "Mrs. Julie Smith", :date => DateTime.now - 3.days }
           ]
-      }.to_json)
+      })
 
       property = persistence.properties[:name]
       property.all.length.should == 2
