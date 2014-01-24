@@ -12,6 +12,10 @@ Dir[path + "/support/**/*.rb"].each{ |f| require f }
 
 require 'timecop'
 require 'pry'
+require 'webmock/rspec'
+
+WebMock.disable_net_connect!(:allow_localhost => true)
+Plyushkin::Service.service = Plyushkin::Service::Stub.new
 
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true

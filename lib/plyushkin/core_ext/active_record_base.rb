@@ -14,7 +14,7 @@ ActiveRecord::Base.instance_eval do
   def initialize_plyushkin
     class << self 
       def plyushkin_model
-        @plyushkin_model ||= Plyushkin::Model.new(Plyushkin::Service::Stub.new)
+        @plyushkin_model ||= Plyushkin::Model.new(Plyushkin::Service.service)
       end
     end
 
