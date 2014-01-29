@@ -1,10 +1,12 @@
 class Plyushkin::Model
+  attr_reader :service, :name
 
-  def initialize(service)
+  def initialize(service, name)
     @service          = service
     @types            = {}
     @ignore_unchanged_values = {}
     @callbacks        = {}
+    @name = name
   end
 
   def register(name, type, opts={})
@@ -27,9 +29,4 @@ class Plyushkin::Model
   def ignore_unchanged_values
     @ignore_unchanged_values.dup
   end
-
-  def service
-    @service
-  end
-
 end

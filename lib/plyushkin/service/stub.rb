@@ -1,15 +1,24 @@
 class Plyushkin::Service::Stub
 
   def initialize
-    @store = {}
+    @models = {}
   end
 
-  def get(id)
-    JSON.parse(@store[id] || "{}")
+  def get(model, id)
+    JSON.parse(get_store(model)[id] || "{}")
   end
 
-  def put(id, payload)
-    @store[id] = payload.to_json
+  def put(model, id, payload)
+    get_store(model)[id] = payload.to_json
+  end
+
+  private
+  def get_store(model)
+    if @models[model]
+      store = @models[model]
+    else
+      store = @models[model] = {}
+    end
   end
 
 end

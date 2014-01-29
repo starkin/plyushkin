@@ -33,6 +33,20 @@ describe ActiveRecord::Base do
         property = member.geolocation
         property.value_type.should == Plyushkin::Test::CoordinateValue
       end
+
+      it 'should use class name when setting up the service' do
+        widget_one = Plyushkin::Test::WidgetOne.new
+        widget_two = Plyushkin::Test::WidgetTwo.new
+
+        widget_one.apples.create(:value => 1)
+        widget_two.beans.create(:value => 2)
+
+        widget_one.save!
+        widget_two.save!
+
+        widget_one.reload.apples.last.value.should == 1
+        widget_two.reload.beans.last.value.should == 2
+      end
     end
 
     describe 'after_create option' do
@@ -155,6 +169,5 @@ describe ActiveRecord::Base do
         member.login_date.last.value.should === now
       end
     end
-
   end
 end

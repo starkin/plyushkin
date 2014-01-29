@@ -7,6 +7,12 @@ class CreateMembers < ActiveRecord::Migration
     create_table :members do |t|
       t.timestamps
     end
+    create_table :widget_ones do |t|
+      t.timestamps
+    end
+    create_table :widget_twos do |t|
+      t.timestamps
+    end
   end
 end
 CreateMembers.up

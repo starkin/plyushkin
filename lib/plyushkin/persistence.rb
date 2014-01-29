@@ -14,12 +14,12 @@ class Plyushkin::Persistence
     (@properties || {}).each do |name, property|
       hash[name] = property.value_hashes
     end
-    model.service.put(id, hash)
+    model.service.put(model.name, id, hash)
   end
 
   def load(id)
     @properties = {}
-    model.service.get(id).each do |name, values| 
+    model.service.get(model.name, id).each do |name, values|
       property = Plyushkin::Property.build(name, model.registered_types[name.to_sym], values,
                                          :callbacks               => @callbacks[name.to_sym],
                                          :ignore_unchanged_values => @model.ignore_unchanged_values[name.to_sym] )

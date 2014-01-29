@@ -10,6 +10,8 @@ module Plyushkin::Test
   end
 
   class Plyushkin::Test::Member < ActiveRecord::Base; end
+  class Plyushkin::Test::WidgetOne < ActiveRecord::Base; hoards :apples; end
+  class Plyushkin::Test::WidgetTwo < ActiveRecord::Base; hoards :beans; end
 
   class Plyushkin::Test::DateValue < Plyushkin::BaseValue
     persisted_attr :value, :formatter => :to_date

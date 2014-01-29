@@ -7,8 +7,8 @@ class Plyushkin::Service::Web
     @url = opts.delete(:url)
   end
 
-  def get(id)
-    uri = URI("#{url}/#{id}")
+  def get(model, id)
+    uri = URI("#{url}/#{model}/#{id}")
     use_ssl = true if uri.scheme == "https"
 
     response = Net::HTTP.start(uri.host, uri.port, 
@@ -20,8 +20,8 @@ class Plyushkin::Service::Web
     JSON.parse(response.body)
   end
 
-  def put(id, payload)
-    uri = URI("#{url}/#{id}")
+  def put(model, id, payload)
+    uri = URI("#{url}/#{model}/#{id}")
     use_ssl = true if uri.scheme == "https"
 
     response = Net::HTTP.start(uri.host, uri.port, 

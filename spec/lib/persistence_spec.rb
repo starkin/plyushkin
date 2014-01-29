@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Plyushkin::Persistence do
   let(:service) do
     service = Plyushkin::Service.service
-    service.put(1,
+    service.put("widget", 1,
       { :name   => [{ :value => "Steve" }] ,
         :weight => [{ :value => 150 }],
         :udt    => [{ :x => 10, :y => 20 }]
@@ -12,7 +12,7 @@ describe Plyushkin::Persistence do
   end
 
   let(:model) do
-    m = Plyushkin::Model.new(service)
+    m = Plyushkin::Model.new(service, "widget")
     m.register(:name,   Plyushkin::StringValue)
     m.register(:weight, Plyushkin::StringValue)
     m.register(:udt,    Plyushkin::Test::CoordinateValue)
@@ -57,7 +57,7 @@ describe Plyushkin::Persistence do
     end
 
     it 'should parse all history for a property' do
-      service.put(1,
+      service.put("widget", 1,
         {
           :name => [
             { :value => "Ms. Julie Jones",  :date => DateTime.now - 2.days },
