@@ -13,7 +13,7 @@ describe Plyushkin::Persistence do
     service
   end
 
-  let(:cache) { Plyushkin::Cache::Stub.new }
+  let(:cache) { Plyushkin::Cache.cache }
 
   let(:model) do
     m = Plyushkin::Model.new(service, "widget", cache)

@@ -10,4 +10,8 @@ class Plyushkin::Cache::Stub
   def read(key)
     @cache[key]
   end
+
+  def clear
+    @cache = {}
+  end
 end

@@ -5,6 +5,7 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
+require 'pry'
 path = File.dirname(File.expand_path(__FILE__))
 require path + '/../lib/plyushkin'
 Plyushkin::Service.service = Plyushkin::Service::Stub.new
@@ -13,7 +14,6 @@ require path + '/../lib/plyushkin/test'
 Dir[path + "/support/**/*.rb"].each{ |f| require f }
 
 require 'timecop'
-require 'pry'
 require 'webmock/rspec'
 
 WebMock.disable_net_connect!(:allow_localhost => true)
@@ -28,5 +28,9 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = 'random'
+
+  config.after(:each) do
+    Plyushkin::Cache.cache.clear
+  end
 end
 
