@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    plyushkin (0.0.2)
+    plyushkin (0.0.3)
       activerecord (~> 3.2.12)
 
 GEM

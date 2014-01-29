@@ -24,7 +24,7 @@ class Plyushkin::Persistence
                                          :callbacks               => @callbacks[name.to_sym],
                                          :ignore_unchanged_values => @model.ignore_unchanged_values[name.to_sym] )
       @properties[name.to_sym] = property
-    end
+    end if id
     add_missing_properties
   end
 
