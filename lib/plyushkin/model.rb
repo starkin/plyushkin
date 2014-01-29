@@ -1,12 +1,13 @@
 class Plyushkin::Model
-  attr_reader :service, :name
+  attr_reader :service, :name, :cache
 
-  def initialize(service, name)
-    @service          = service
-    @types            = {}
+  def initialize(service, name, cache)
+    @service                 = service
+    @types                   = {}
     @ignore_unchanged_values = {}
-    @callbacks        = {}
-    @name = name
+    @callbacks               = {}
+    @name                    = name
+    @cache                   = cache
   end
 
   def register(name, type, opts={})

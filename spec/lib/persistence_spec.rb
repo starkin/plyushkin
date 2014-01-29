@@ -1,18 +1,22 @@
 require 'spec_helper'
 
 describe Plyushkin::Persistence do
-  let(:service) do
-    service = Plyushkin::Service.service
-    service.put("widget", 1,
+  let(:data) do
       { :name   => [{ :value => "Steve" }] ,
         :weight => [{ :value => 150 }],
         :udt    => [{ :x => 10, :y => 20 }]
-      })
+      }
+  end
+  let(:service) do
+    service = Plyushkin::Service.service
+    service.put("widget", 1, data)
     service
   end
 
+  let(:cache) { Plyushkin::Cache::Stub.new }
+
   let(:model) do
-    m = Plyushkin::Model.new(service, "widget")
+    m = Plyushkin::Model.new(service, "widget", cache)
     m.register(:name,   Plyushkin::StringValue)
     m.register(:weight, Plyushkin::StringValue)
     m.register(:udt,    Plyushkin::Test::CoordinateValue)
@@ -33,11 +37,10 @@ describe Plyushkin::Persistence do
   end
 
   describe '#save' do
-    it 'should save to source that load uses' do
+    it 'should save to service' do
       persistence.properties[:name].create(:value => "Mike")
       persistence.save(1)
-      persistence.load(1)
-      persistence.properties[:name].last.value.should == "Mike"
+      service.get("widget", 1)["name"].last["value"].should == "Mike"
     end
   end
 
@@ -74,6 +77,23 @@ describe Plyushkin::Persistence do
     it "should add an empty array for a property that isn't returned from service" do
       model.register(:missing_property, Plyushkin::StringValue)
       persistence.properties[:missing_property].all.should == []
+    end
+  end
+
+  describe "#caching" do
+    it "should use cache values on subsequent calls" do
+      persistence.properties[:weight].last.value.should == 150
+      service.put("widget", 1,
+        { :weight => [{ :value => 200 }] })
+      persistence.load(1)
+      persistence.properties[:weight].last.value.should == 150
+    end
+
+    it "should update the cache on save" do
+      persistence.properties[:name].create(:value => "Mike")
+      persistence.save(1)
+      persistence.load(1)
+      persistence.properties[:name].last.value.should == "Mike"
     end
   end
 end

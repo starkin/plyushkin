@@ -15,7 +15,7 @@ ActiveRecord::Base.instance_eval do
     class << self
       def plyushkin_model
         model_name = name ? name.parameterize : "record"
-        @plyushkin_model ||= Plyushkin::Model.new(Plyushkin::Service.service, model_name)
+        @plyushkin_model ||= Plyushkin::Model.new(Plyushkin::Service.service, model_name, Plyushkin::Cache::Stub.new)
       end
     end
 
