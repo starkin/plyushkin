@@ -13,6 +13,12 @@ class CreateMembers < ActiveRecord::Migration
     create_table :widget_twos do |t|
       t.timestamps
     end
+    create_table :ignores_unchanged_widgets do |t|
+      t.timestamps
+    end
+    create_table :callback_widgets do |t|
+      t.timestamps
+    end
   end
 end
 CreateMembers.up

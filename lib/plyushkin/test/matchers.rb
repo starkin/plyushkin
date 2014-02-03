@@ -1,5 +1,5 @@
+require_relative "matcher_base.rb"
 require_relative "persisted_attribute_matcher.rb"
-require_relative "with_format_matcher.rb"
 require_relative "hoarded_attribute_matcher.rb"
 
 module Plyushkin::Test::Matchers

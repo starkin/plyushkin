@@ -7,7 +7,7 @@ ActiveRecord::Base.instance_eval do
     end
     validates name, :plyushkin => true
 
-    plyushkin_model.register(name, opts[:type], opts)
+    plyushkin_model.register(name, opts[:type] || Plyushkin::StringValue, opts)
     plyushkin_model.register_callback(name, :after_create, opts[:after_create]) if opts[:after_create]
   end
 

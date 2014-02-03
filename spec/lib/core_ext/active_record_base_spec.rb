@@ -20,7 +20,7 @@ describe ActiveRecord::Base do
           hoards :geolocation, :type => Plyushkin::Test::CoordinateValue
         end
 
-        clazz.plyushkin_model.registered_types[:login_date].should be_nil
+        clazz.plyushkin_model.registered_types[:login_date].should  == Plyushkin::StringValue
         clazz.plyushkin_model.registered_types[:geolocation].should == Plyushkin::Test::CoordinateValue
       end
 
