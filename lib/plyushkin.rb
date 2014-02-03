@@ -3,6 +3,7 @@ require "active_record"
 
 module Plyushkin; end
 path = File.dirname(File.expand_path(__FILE__)) 
+require path + "/plyushkin/error.rb"
 require path + "/plyushkin/base_value"
 require path + "/plyushkin/string_value"
 require path + "/plyushkin/nil_value"

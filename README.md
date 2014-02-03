@@ -18,7 +18,30 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Configure the backend service that plyushkin will use in your environments/<environment>.rb file.  
+For example, to configure the stub service for running specs, the following code would go in your 
+config/environments/test.rb file of a Rails application.
+
+    config.before_initialize do |c|
+      Plyushkin::Service.service = Plyushkin::Service::Stub.new
+    end
+
+To use plyushkin against a live web service,
+assign an instance of ``Plyushkin::Service::Web.new(:url => 'http://yourservice.com')``
+
+## Testing
+
+Plyushkin provides RSpec matchers for testing class macros.  To use these matchers, 
+add ``config.include Plyushkin::Test::Matchers`` to your RSpec.configure in spec_helper.
+
+To test Plyushkin configuration in your model:
+
+    describe YourModel do
+      it { should persist_attribute(:your_attribute) }
+      it { should_not persist_attribute(:your_non_plyushkin_attribute) }
+      it { should persist_attribute(:your_attribute).with_format(:to_date) }
+      it { should_not persist_attribute(:your_attribute).with_format(:not_a_formatter) }
+    end
 
 ## Contributing
 

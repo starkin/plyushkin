@@ -28,6 +28,7 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = 'random'
+  config.include Plyushkin::Test::Matchers
 
   config.after(:each) do
     Plyushkin::Cache.cache.clear

@@ -9,10 +9,16 @@ class Plyushkin::BaseValue
     end
   end
 
+  def formatters
+    @formatters.dup
+  end
+
   def self.persisted_attr(*attributes)
     opts = attributes.last.is_a?(Hash) ? attributes.pop : {}
     names = attributes
     formatter = opts[:formatter]
+
+    names.each{|name| formatters[name] = formatter}
 
     persisted_attributes.concat(names)
     attr_writer *names
@@ -33,6 +39,14 @@ class Plyushkin::BaseValue
       @persisted_attributes ||= []
     else
       @persisted_attributes ||= superclass.persisted_attributes.dup
+    end
+  end
+
+  def self.formatters
+    if self.superclass == Object
+      @formatters ||= {}
+    else
+      @formatters ||= superclass.formatters.dup
     end
   end
 

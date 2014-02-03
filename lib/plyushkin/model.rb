@@ -2,6 +2,10 @@ class Plyushkin::Model
   attr_reader :service, :name, :cache
 
   def initialize(service, name, cache)
+    raise Plyushkin::Error.new <<-ERROR unless service
+    Service cannot be nil.  Set Plyushkin::Service.service to a service instance in an initializer.
+    ERROR
+
     @service                 = service
     @types                   = {}
     @ignore_unchanged_values = {}
