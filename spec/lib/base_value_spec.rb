@@ -91,7 +91,9 @@ describe Plyushkin::BaseValue do
       value.my_attr.should == 5
       value.my_attr2.should == 9999
     end
+  end
 
+  describe 'formatter methods' do
     describe '#to_i' do
       it 'should return the same value if it contains non-numeric characters' do
         Plyushkin::BaseValue.new.to_i("abcd").should == "abcd"
