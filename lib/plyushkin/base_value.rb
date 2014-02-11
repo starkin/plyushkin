@@ -63,11 +63,17 @@ class Plyushkin::BaseValue
   end
 
   def to_i(value)
-    value.to_i
+    value =~ /\A\d+\Z/ ? value.to_i : value
   end
 
   def to_date(value)
     value.is_a?(String) ? DateTime.parse(value) : value
+  end
+
+  def to_bool(value)
+    return true if value == "true"
+    return false if value == "false"
+    return value
   end
 
 end

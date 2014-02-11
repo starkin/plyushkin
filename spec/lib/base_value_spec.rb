@@ -19,6 +19,19 @@ describe Plyushkin::BaseValue do
       value.should_not be_valid
       value.errors.full_messages.should == ["Date cannot be in the future"]
     end
+
+    describe '#numericality' do
+      it 'should not be valid if not an integer' do
+        clazz = Class.new(Plyushkin::StringValue) do
+          validates :value, :numericality => true
+        end
+        clazz.stub(:name).and_return("Clazz")
+
+        c = clazz.new
+        c.value = 'abcd'
+        c.should_not be_valid
+      end
+    end
   end
 
   describe '##persisted_attr' do
@@ -79,11 +92,47 @@ describe Plyushkin::BaseValue do
       value.my_attr2.should == 9999
     end
 
+    describe '#to_i' do
+      it 'should return the same value if it contains non-numeric characters' do
+        Plyushkin::BaseValue.new.to_i("abcd").should == "abcd"
+      end
+
+      it 'should return an integer if string is a number' do
+        Plyushkin::BaseValue.new.to_i("1234").should == 1234
+      end
+
+      it 'should return an integer if arg is an integer' do
+        Plyushkin::BaseValue.new.to_i(1234).should == 1234
+      end
+
+      it 'should return nil when arg is nil' do
+        Plyushkin::BaseValue.new.to_i(nil).should be_nil
+      end
+    end
+
     describe '#to_date' do
       it 'format a json string to a date' do
         value = Plyushkin::BaseValue.new
         now = DateTime.now
         value.to_date(now.to_json).should === now
+      end
+    end
+
+    describe '#to_bool' do
+      it 'should return true if string true is passed in' do
+        Plyushkin::BaseValue.new.to_bool("true").should be_true
+      end
+
+      it 'should return false if string false is passed in' do
+        Plyushkin::BaseValue.new.to_bool("false").should be_false
+      end
+
+      it 'should return nil if nil is passed in' do
+        Plyushkin::BaseValue.new.to_bool(nil).should be_nil
+      end
+
+      it 'should return the same value if it cannot covert to boolean' do
+        Plyushkin::BaseValue.new.to_bool('railsconf').should == 'railsconf'
       end
     end
 
