@@ -112,6 +112,28 @@ describe Plyushkin::BaseValue do
       end
     end
 
+    describe '#to_f' do
+      it 'should return the same value if it contains non-numeric characters' do
+        Plyushkin::BaseValue.new.to_f("abcd").should == "abcd"
+      end
+
+      it 'should return a float if string is a number' do
+        Plyushkin::BaseValue.new.to_f("12.34").should == 12.34
+      end
+
+      it 'should return a float if arg is a float' do
+        Plyushkin::BaseValue.new.to_f(123.4).should == 123.4
+      end
+
+      it 'should return a float if arg is an integer' do
+        Plyushkin::BaseValue.new.to_f(455).should == 455.0
+      end
+
+      it 'should return nil when arg is nil' do
+        Plyushkin::BaseValue.new.to_f(nil).should be_nil
+      end
+    end
+
     describe '#to_date' do
       it 'format a json string to a date' do
         value = Plyushkin::BaseValue.new

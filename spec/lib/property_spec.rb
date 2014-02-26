@@ -167,6 +167,19 @@ describe Plyushkin::Property do
     end
   end
 
+  describe '#nil?' do
+    it 'should be true if last value is NilValue' do
+      property = Plyushkin::Property.new(:property_name, :type => Plyushkin::Test::PresenceTestValue)
+      property.should be_nil
+    end
+
+    it 'should be false if last value is not a NilValue' do
+      property = Plyushkin::Property.new(:property_name, :type => Plyushkin::Test::PresenceTestValue)
+      property.create
+      property.should_not be_nil
+    end
+  end
+
   it '#insert_position' do
     property = Plyushkin::Property.new(:property_name)
     value1 = property.create(:value => 7, :date => DateTime.now - 7.days)

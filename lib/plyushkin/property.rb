@@ -80,4 +80,8 @@ class Plyushkin::Property
 
     value_hashes == {} ? [] : [value_hashes]
   end
+
+  def nil?
+    last.is_a?(Plyushkin::NilValue)
+  end
 end

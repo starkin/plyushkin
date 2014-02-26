@@ -21,6 +21,7 @@ class Plyushkin::BaseValue
     names.each{|name| formatters[name] = formatter}
 
     persisted_attributes.concat(names)
+
     attr_writer *names
     names.each do |name|
       define_method(name) do
@@ -35,7 +36,7 @@ class Plyushkin::BaseValue
   end
 
   def self.persisted_attributes
-    if self.superclass == Object
+    if self.superclass == Object && self.superclass.class == Class
       @persisted_attributes ||= []
     else
       @persisted_attributes ||= superclass.persisted_attributes.dup
@@ -64,6 +65,17 @@ class Plyushkin::BaseValue
 
   def to_i(value)
     value =~ /\A\d+\Z/ ? value.to_i : value
+  end
+
+  #TODO: Maybe this can be nicer.
+  def to_f(value)
+    begin
+      Float(value)
+    rescue ArgumentError => e
+      value
+    rescue TypeError => e
+      value
+    end
   end
 
   def to_date(value)
