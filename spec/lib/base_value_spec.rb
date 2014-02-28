@@ -20,6 +20,18 @@ describe Plyushkin::BaseValue do
       value.errors.full_messages.should == ["Date cannot be in the future"]
     end
 
+    it 'should be valid if date is equal to now' do
+      Timecop.freeze(DateTime.now) do
+        Plyushkin::StringValue.new.should be_valid
+      end
+    end
+
+    it 'should be valid if date is equal to current' do
+      Timecop.freeze(DateTime.current) do
+        Plyushkin::StringValue.new.should be_valid
+      end
+    end
+
     describe '#numericality' do
       it 'should not be valid if not an integer' do
         clazz = Class.new(Plyushkin::StringValue) do
