@@ -43,6 +43,30 @@ describe Plyushkin::Property do
       end
     end
 
+    describe '#dirty?' do
+      let(:property) { Plyushkin::Property.new(:property_name) }
+
+      it 'should be false when the property is first created' do
+        property.should_not be_dirty
+      end
+
+      it 'should be true when a value is created' do
+        property.create(:value => 5)
+        property.should be_dirty
+      end
+    end
+
+    describe '#mark_persisted' do
+      let(:property) { Plyushkin::Property.new(:property_name) }
+
+      it 'should reset dirty? to false' do
+        property.create(:value => 5)
+        property.should be_dirty
+        property.mark_persisted
+        property.should_not be_dirty
+      end
+    end
+
     describe 'ignore_unchanged_value' do
       it 'should not add a value when ignore_unchanged_value is true and value does not change' do
         property = Plyushkin::Property.new(:property_name, :ignore_unchanged_values => true)

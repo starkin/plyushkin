@@ -11,11 +11,15 @@ class Plyushkin::Persistence
 
   def save(id)
     hash = {}
-    (@properties || {}).each do |name, property|
+    props = @properties || {}
+
+    props.each do |name, property|
       hash[name] = property.value_hashes
     end
     model.service.put(model.name, id, hash)
     model.cache.write(get_key(model.name, id), hash)
+
+    props.values.each(&:mark_persisted)
   end
 
   def load(id)

@@ -33,6 +33,8 @@ class Plyushkin::Property
     @values.insert(insert_position(value.date), value)
     #write a spec for this option
     trigger_callback(:after_create) unless attr[:without_callbacks]
+
+    @dirty = true
     value
   end
 
@@ -83,5 +85,13 @@ class Plyushkin::Property
 
   def nil?
     last.is_a?(Plyushkin::NilValue)
+  end
+
+  def dirty?
+    @dirty
+  end
+
+  def mark_persisted
+    @dirty = false
   end
 end

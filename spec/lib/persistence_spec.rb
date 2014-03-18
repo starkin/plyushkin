@@ -42,6 +42,14 @@ describe Plyushkin::Persistence do
       persistence.save(1)
       service.get("widget", 1)["name"].last["value"].should == "Mike"
     end
+
+    it 'should mark all properties as persisted' do
+      persistence.properties[:name].create(:value => "Mike")
+      persistence.properties[:weight].create(:value => "150")
+      persistence.save(1)
+      persistence.properties[:name].should_not be_dirty
+      persistence.properties[:weight].should_not be_dirty
+    end
   end
 
   describe '#load' do
