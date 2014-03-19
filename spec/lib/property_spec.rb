@@ -1,6 +1,14 @@
 require 'spec_helper'
 
 describe Plyushkin::Property do
+  describe '##load' do
+    it 'should mark all values as not new records' do
+      property = Plyushkin::Property.load(:name, Plyushkin::StringValue,
+                                [ {:value => 'test'} ])
+      property.last.should_not be_new_record
+    end
+  end
+
   describe '#create' do
     it 'should add a StringValue' do
       property = Plyushkin::Property.new(:property_name)
@@ -65,6 +73,13 @@ describe Plyushkin::Property do
         property.mark_persisted
         property.should_not be_dirty
       end
+
+      it 'should mark all values new_record to false' do
+        property.create(:value => 5)
+        property.last.should be_new_record
+        property.mark_persisted
+        property.last.should_not be_new_record
+      end
     end
 
     describe 'ignore_unchanged_value' do
@@ -101,20 +116,28 @@ describe Plyushkin::Property do
       end
     end
 
-    describe 'without_callbacks' do
-      it 'should not run callbacks if option is true' do
+    describe 'new_record' do
+      it 'should not run callbacks if option is false' do
         called = 0
         callbacks = { :after_create => lambda{ called += 1 } }
         property = Plyushkin::Property.new(:property_name, :callbacks => callbacks)
-        property.create(:value => 5, :without_callbacks => true)
+        property.create(:value => 5, :new_record => false)
         called.should == 0
       end
 
-      it 'should run callbacks if option is false' do
+      it 'should run callbacks if option is true' do
         called = 0
         callbacks = { :after_create => lambda{ called += 1 } }
         property = Plyushkin::Property.new(:property_name, :callbacks => callbacks)
-        property.create(:value => 5, :without_callbacks => false)
+        property.create(:value => 5, :new_record => true)
+        called.should == 1
+      end
+
+      it 'should run callbacks if no option is provided' do
+        called = 0
+        callbacks = { :after_create => lambda{ called += 1 } }
+        property = Plyushkin::Property.new(:property_name, :callbacks => callbacks)
+        property.create(:value => 5)
         called.should == 1
       end
     end

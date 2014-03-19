@@ -25,7 +25,7 @@ class Plyushkin::Persistence
   def load(id)
     @properties = {}
     cached(id).each do |name, values|
-      property = Plyushkin::Property.build(name, model.registered_types[name.to_sym], values,
+      property = Plyushkin::Property.load(name, model.registered_types[name.to_sym], values,
                                            :callbacks               => @callbacks[name.to_sym],
                                            :ignore_unchanged_values => @model.ignore_unchanged_values[name.to_sym] )
       @properties[name.to_sym] = property

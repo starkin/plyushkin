@@ -86,6 +86,19 @@ describe Plyushkin::Persistence do
       model.register(:missing_property, Plyushkin::StringValue)
       persistence.properties[:missing_property].all.should == []
     end
+
+    it 'should mark loaded values new_record to false' do
+      persistence.properties[:name  ].last.should_not be_new_record
+      persistence.properties[:weight].last.should_not be_new_record
+      persistence.properties[:udt   ].last.should_not be_new_record
+    end
+
+    it 'should mark saved values new_record to false' do
+      persistence.properties[:name].create(:values => 'Mark')
+      persistence.properties[:name].last.should be_new_record
+      persistence.save(1)
+      persistence.properties[:name].last.should_not be_new_record
+    end
   end
 
   describe "#caching" do

@@ -46,6 +46,22 @@ describe Plyushkin::BaseValue do
     end
   end
 
+  describe '#new_record?' do
+    it 'should be true for a new instance' do
+      clazz = Class.new(Plyushkin::StringValue) 
+      clazz.new.should be_new_record
+    end
+  end
+
+  describe '#mark_persisted' do
+    it 'should set new_record to false' do
+      clazz = Class.new(Plyushkin::StringValue) 
+      value = clazz.new
+      value.mark_persisted
+      value.should_not be_new_record
+    end
+  end
+
   describe '##persisted_attr' do
     it 'should add attribute to persisted_attributes' do
       clazz = Class.new(Plyushkin::BaseValue) do

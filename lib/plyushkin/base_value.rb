@@ -2,11 +2,21 @@ class Plyushkin::BaseValue
   include ActiveModel::Validations
 
   def initialize(attr={})
+    @new_record = attr[:new_record].nil? ? true : attr[:new_record] 
+
     attr   = attr.dup
     @date  = attr.delete(:date) || DateTime.current
     attr.each do |k,v|
       send("#{k}=", v) if respond_to?("#{k}=")
     end
+  end
+
+  def new_record?
+    @new_record
+  end
+
+  def mark_persisted
+    @new_record = false
   end
 
   def formatters

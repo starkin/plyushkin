@@ -32,7 +32,7 @@ class Plyushkin::Property
 
     @values.insert(insert_position(value.date), value)
     #write a spec for this option
-    trigger_callback(:after_create) unless attr[:without_callbacks]
+    trigger_callback(:after_create) if value.new_record?
 
     @dirty = true
     value
@@ -63,10 +63,10 @@ class Plyushkin::Property
     @value_type ||= Plyushkin::StringValue
   end
 
-  def self.build(name, type, values, opts={})
+  def self.load(name, type, values, opts={})
     opts[:type] = type
     prop = Plyushkin::Property.new(name, opts).tap do |p|
-      values.each { |value| p.create(value.merge(:without_callbacks => true)) }
+      values.each { |value| load_value(p, value) }
     end
 
     prop
@@ -93,5 +93,13 @@ class Plyushkin::Property
 
   def mark_persisted
     @dirty = false
+    all.each(&:mark_persisted)
   end
+
+  private 
+
+  def self.load_value(property, value)
+    property.create(value.merge(:new_record => false)) 
+  end
+
 end
