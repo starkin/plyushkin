@@ -73,14 +73,16 @@ class Plyushkin::Property
   end
 
   def value_hashes
-    value_hashes = {}
+    all_value_hashes = []
     all.each do |value|
+      value_hash = {}
       value_type.persisted_attributes.each do |attr|
-        value_hashes[attr] = value.send(attr) 
+        value_hash[attr] = value.send(attr) 
       end
+      all_value_hashes << value_hash
     end
 
-    value_hashes == {} ? [] : [value_hashes]
+    all_value_hashes 
   end
 
   def nil?

@@ -227,13 +227,46 @@ describe Plyushkin::Property do
     end
   end
 
-  it '#insert_position' do
-    property = Plyushkin::Property.new(:property_name)
-    value1 = property.create(:value => 7, :date => DateTime.now - 7.days)
-    value2 = property.create(:value => 5, :date => DateTime.now - 5.days)
-    property.insert_position(DateTime.now).should == 2
-    property.insert_position(DateTime.now - 6.days).should == 1
-    property.insert_position(DateTime.now - 8.days).should == 0
+  describe '#insert_position' do
+    it 'should get position in date order' do
+      property = Plyushkin::Property.new(:property_name)
+      value1 = property.create(:value => 7, :date => DateTime.now - 7.days)
+      value2 = property.create(:value => 5, :date => DateTime.now - 5.days)
+      property.insert_position(DateTime.now).should == 2
+      property.insert_position(DateTime.now - 6.days).should == 1
+      property.insert_position(DateTime.now - 8.days).should == 0
+    end
+  end
+
+  describe '#value_hashes' do
+    let(:property) { Plyushkin::Property.new(:property_name) }
+
+    it 'should include all values as hashes in an array' do
+
+      p1 = property.create(:value => 1)
+      p2 = property.create(:value => 2)
+      property.value_hashes.should == [
+        { :date => p1.date, :value => 1 },
+        { :date => p2.date, :value => 2 }
+      ]
+    end
+
+    it 'should include all attributes in value hash' do
+      property = Plyushkin::Property.new(:property_name, :type => Plyushkin::Test::CoordinateValue)
+
+      c1 = property.create(:x => 5,  :y => 10)
+      c2 = property.create(:x => 15, :y => 20)
+      property.value_hashes.should == [
+        { :date => c1.date, :x => 5,  :y => 10 },
+        { :date => c2.date, :x => 15, :y => 20 }
+      ]
+
+    end
+
+    it 'should be an empty array if no values are set' do
+      property.value_hashes.should == []
+    end
+
   end
 
 end

@@ -26,4 +26,7 @@ module Plyushkin::Test
     persisted_attr :value, :formatter => :to_date
   end
 
+  class Plyushkin::Test::ComplexModel < ActiveRecord::Base
+    hoards :coordinate, :type => Plyushkin::Test::CoordinateValue
+  end
 end

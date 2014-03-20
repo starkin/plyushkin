@@ -43,6 +43,13 @@ describe Plyushkin::Persistence do
       service.get("widget", 1)["name"].last["value"].should == "Mike"
     end
 
+    it 'should save multiple new values of the same property' do
+      persistence.properties[:name].create(:value => 'Bob')
+      persistence.save(1)
+      persistence.load(1)
+      persistence.properties[:name].all.length.should == 2
+    end
+
     it 'should mark all properties as persisted' do
       persistence.properties[:name].create(:value => "Mike")
       persistence.properties[:weight].create(:value => "150")
