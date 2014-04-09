@@ -1,5 +1,6 @@
 # Plyushkin
 
+[![Code Climate](https://codeclimate.com/github/OnlifeHealth/plyushkin.png)](https://codeclimate.com/github/OnlifeHealth/plyushkin) [![Gem Version](https://badge.fury.io/rb/plyushkin.svg)](http://badge.fury.io/rb/plyushkin)
 TODO: Write a gem description
 
 ## Installation
