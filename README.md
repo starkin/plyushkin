@@ -1,7 +1,7 @@
 # Plyushkin
 
 [![Code Climate](https://codeclimate.com/github/OnlifeHealth/plyushkin.png)](https://codeclimate.com/github/OnlifeHealth/plyushkin) [![Gem Version](https://badge.fury.io/rb/plyushkin.svg)](http://badge.fury.io/rb/plyushkin)
-[![Build Status](https://travis-ci.org/onlifehealth/plyushkin.png)](https://travis-ci.org/onlifehealth/plyushkin)
+[![Build Status](https://travis-ci.org/OnlifeHealth/plyushkin.png)](https://travis-ci.org/OnlifeHealth/plyushkin)
 
 TODO: Write a gem description
 Plyushkin provides a way to capture historical data
