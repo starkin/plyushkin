@@ -11,4 +11,5 @@ module Plyushkin::Cache
 end
 
 require File.dirname(File.expand_path(__FILE__)) + "/cache/stub"
+require File.dirname(File.expand_path(__FILE__)) + "/cache/null"
 require File.dirname(File.expand_path(__FILE__)) + "/cache/rails_cache"

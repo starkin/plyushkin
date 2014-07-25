@@ -93,8 +93,8 @@ class Plyushkin::BaseValue
   end
 
   def to_bool(value)
-    return true if value == "true"
-    return false if value == "false"
+    return true if [1, "1", "true"].include?(value)
+    return false if [0, "0", "false"].include?(value)
     return value
   end
 

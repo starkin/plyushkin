@@ -172,11 +172,27 @@ describe Plyushkin::BaseValue do
 
     describe '#to_bool' do
       it 'should return true if string true is passed in' do
-        Plyushkin::BaseValue.new.to_bool("true").should be_true
+        Plyushkin::BaseValue.new.to_bool("true").should == true
+      end
+
+      it 'should return true if "1" is passed in' do
+        Plyushkin::BaseValue.new.to_bool("1").should == true
+      end
+
+      it 'should return false if "0" is passed in' do
+        Plyushkin::BaseValue.new.to_bool("0").should == false
+      end
+
+      it 'should return true if 1 is passed in' do
+        Plyushkin::BaseValue.new.to_bool(1).should == true
+      end
+
+      it 'should return false if 0 is passed in' do
+        Plyushkin::BaseValue.new.to_bool(0).should == false
       end
 
       it 'should return false if string false is passed in' do
-        Plyushkin::BaseValue.new.to_bool("false").should be_false
+        Plyushkin::BaseValue.new.to_bool("false").should == false
       end
 
       it 'should return nil if nil is passed in' do
