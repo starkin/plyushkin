@@ -236,7 +236,7 @@ To test Plyushkin configuration in your model:
 
     describe Vehicle do
       it { should hoard(:mechanic) }
-      it { should hoard(:mechanic).and_ignore_unchanged_values }
+      it { should hoard(:mechanic).and_ignore_unchanged_values } 
       it { should hoard(:oil_change).of_type(OilChangeValue) }
       it { should hoard(:oil_change).of_type(OilChangeValue).
         and_after_create_call(:calculate_next_oil_change_mileage) }
