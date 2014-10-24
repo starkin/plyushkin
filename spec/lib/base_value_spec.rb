@@ -138,6 +138,10 @@ describe Plyushkin::BaseValue do
       it 'should return nil when arg is nil' do
         Plyushkin::BaseValue.new.to_i(nil).should be_nil
       end
+
+      it 'should return an integer when arg is a float' do
+        Plyushkin::BaseValue.new.to_i("2.0").should == 2
+      end
     end
 
     describe '#to_f' do

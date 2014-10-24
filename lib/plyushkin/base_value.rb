@@ -74,7 +74,7 @@ class Plyushkin::BaseValue
   end
 
   def to_i(value)
-    value =~ /\A\d+\Z/ ? value.to_i : value
+    value =~ /\A\d+(\.\d+)?\Z/ ? value.to_i : value
   end
 
   #TODO: Maybe this can be nicer.
