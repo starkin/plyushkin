@@ -104,6 +104,20 @@ describe ActiveRecord::Base do
 
     end
 
+    describe 'default_filter option' do
+      it 'should filter results when a default_filter is specified' do
+        clazz = Class.new(Plyushkin::Test::Member) do
+          hoards :test_value, :default_filter => Proc.new{ |v| v.value > 5 }
+        end
+
+        member = clazz.new
+        member.test_value.create(:value => 3)
+        value = member.test_value.create(:value => 9)
+
+        member.test_value.all.should == [ value ]
+      end
+    end
+
     describe '#validates' do
       it 'should not be valid if hoarding property is not valid' do
         clazz = Class.new(Plyushkin::Test::Member) do

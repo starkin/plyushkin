@@ -15,6 +15,7 @@ class Plyushkin::Property
     @values           = []
     @value_type       = opts[:type]
     @callbacks        = opts[:callbacks]
+    @default_filter   = opts[:default_filter]
     @ignore_unchanged_values = opts[:ignore_unchanged_values]
     @name             = name.to_s
   end
@@ -42,8 +43,8 @@ class Plyushkin::Property
     @callbacks.fetch(sym, DEFAULT_CALLBACK).call if @callbacks
   end
 
-  def all
-    @values
+  def all(opts = {})
+    (@default_filter && !opts[:unfiltered]) ? @values.select(&@default_filter) : @values
   end
 
   def last
