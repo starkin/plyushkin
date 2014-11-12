@@ -5,3 +5,4 @@
 plyushkin*.gem
 vendor/bundle
 tags
+Gemfile.lock
