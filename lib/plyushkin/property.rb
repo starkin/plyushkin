@@ -15,7 +15,7 @@ class Plyushkin::Property
     @values                  = []
     @value_type              = opts[:type]
     @callbacks               = opts[:callbacks]
-    @filter                  = opts[:default_filter]
+    @filter                  = opts[:filter]
     @ignore_unchanged_values = opts[:ignore_unchanged_values]
     @name                    = name.to_s
   end
