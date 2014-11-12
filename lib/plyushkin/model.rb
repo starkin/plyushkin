@@ -9,8 +9,8 @@ class Plyushkin::Model
     @service                 = service
     @types                   = {}
     @ignore_unchanged_values = {}
-    @default_filters         = {}
     @callbacks               = {}
+    @filters                 = {}
     @name                    = name
     @cache                   = cache
   end
@@ -18,11 +18,14 @@ class Plyushkin::Model
   def register(name, type, opts = {})
     @types[name]                   = type
     @ignore_unchanged_values[name] = opts[:ignore_unchanged_values]
-    @default_filters[name]         = opts[:default_filter]
   end
 
   def register_callback(name, callback, method_sym)
     @callbacks[name] = { callback => method_sym }
+  end
+
+  def register_filter(name, method_sym)
+    @filters[name] = method_sym
   end
 
   def registered_types
@@ -37,7 +40,7 @@ class Plyushkin::Model
     @ignore_unchanged_values.dup
   end
 
-  def default_filters
-    @default_filters.dup
+  def filters
+    @filters.dup
   end
 end

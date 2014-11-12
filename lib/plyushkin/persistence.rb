@@ -3,6 +3,7 @@ class Plyushkin::Persistence
   def initialize(model)
     @model = model
     @callbacks = {}
+    @filters = {}
   end
 
   def properties
@@ -26,9 +27,9 @@ class Plyushkin::Persistence
     @properties = {}
     cached(id).each do |name, values|
       property = Plyushkin::Property.load(name, model.registered_types[name.to_sym], values,
-                                           :callbacks               => @callbacks[name.to_sym],
-                                           :ignore_unchanged_values => model.ignore_unchanged_values[name.to_sym],
-                                           :default_filter          => model.default_filters[name.to_sym])
+                                          :callbacks               => @callbacks[name.to_sym],
+                                          :ignore_unchanged_values => model.ignore_unchanged_values[name.to_sym],
+                                          :default_filter          => @filters[name.to_sym])
       @properties[name.to_sym] = property
     end if id
     add_missing_properties
@@ -36,6 +37,10 @@ class Plyushkin::Persistence
 
   def register_callback(name, callback, &block)
     @callbacks[name] = { callback => block }
+  end
+
+  def register_filter(name, &block)
+    @filters[name] = block
   end
 
   private
@@ -62,7 +67,7 @@ class Plyushkin::Persistence
                                          :type                    => model.registered_types[name],
                                          :callbacks               => @callbacks[name],
                                          :ignore_unchanged_values => model.ignore_unchanged_values[name],
-                                         :default_filter          => model.default_filters[name])
+                                         :default_filter          => @filters[name])
       @properties[name] = property
     end
   end

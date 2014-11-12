@@ -116,6 +116,22 @@ describe ActiveRecord::Base do
 
         member.test_value.all.should == [ value ]
       end
+
+      it 'should filter results when a default_filter is specified as a symbol' do
+        clazz = Class.new(Plyushkin::Test::Member) do
+          hoards :test_value, :default_filter => :filter_by
+
+          def filter_by(value)
+            value.value > 5
+          end
+        end
+
+        member = clazz.new
+        member.test_value.create(:value => 3)
+        value = member.test_value.create(:value => 9)
+
+        member.test_value.all.should == [ value ]
+      end
     end
 
     describe '#validates' do

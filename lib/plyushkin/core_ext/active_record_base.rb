@@ -9,6 +9,7 @@ ActiveRecord::Base.instance_eval do
 
     plyushkin_model.register(name, opts[:type] || Plyushkin::StringValue, opts)
     plyushkin_model.register_callback(name, :after_create, opts[:after_create]) if opts[:after_create]
+    plyushkin_model.register_filter(name, opts[:default_filter]) if opts[:default_filter]
   end
 
   def initialize_plyushkin

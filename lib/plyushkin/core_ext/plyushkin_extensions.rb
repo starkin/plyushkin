@@ -17,6 +17,12 @@ module PlyushkinExtensions
       end
     end
 
+    self.class.plyushkin_model.filters.each do |name, filter|
+      plyushkin.register_filter(name) do |value|
+        (filter && filter.is_a?(Symbol)) ? send(filter, value) : filter.call(value)
+      end
+    end
+
     plyushkin.load(id)
   end
 
