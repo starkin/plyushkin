@@ -141,7 +141,39 @@ an oil_change is saved.
 
 ##### Filters
 
+Sometimes it is useful to filter hoarded values.  For example, we may want the ability to soft-delete
+values from the historical properties (hard deletes is against the phylosophy of plyushkin), 
+but we can obtain similar results by:
 
+    class OilChangeValue < Plyushkin::BaseValue
+      persisted_attr :mileage, :formatter => :to_i
+      persisted_attr :oil_type
+      persisted_attr :is_deleted, :formatter => :to_bool
+    end
+
+    class Vehicle < ActiveRecord::Base
+      hoards :oil_change, :type => OilChangeValue, :filter => :soft_delete_filter
+
+      def soft_delete_filter(value)
+        value.is_deleted != true
+      end
+    end
+
+Now all values for the `oil_change` property will be filtered to exclude any values where `is_deleted == true`.
+
+You can also specify a class level filter for all hoards that a class might implement by using:
+
+    class Vehicle < ActiveRecord::Base
+      filter_hoards_by :soft_delete_filter
+    end
+
+This would cause all hoards to be filtered using the `soft_delete_filter`, unless this behavior was
+overridden using a `:filter` parameter on the individual hoards.
+
+If at anytime you wish to get unfiltered data from a property, you can still do that using the
+`:unfiltered` option:
+
+    vehicle.oil_change.all(:unfiltered => true) #=> unfiltered data
 
 ##### Ignoring unchanged values
 
