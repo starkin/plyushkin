@@ -134,6 +134,94 @@ describe ActiveRecord::Base do
       end
     end
 
+    describe 'class level filter for plyushkin' do
+      it 'should filter all hoards if no default_filter is specified' do
+        clazz = Class.new(Plyushkin::Test::Member) do
+          filter_hoards_by :filter_by
+          hoards :test_value
+          hoards :bacon
+
+          def filter_by(value)
+            value.value > 5
+          end
+        end
+
+        member = clazz.new
+        member.test_value.create(:value => 3)
+        value = member.test_value.create(:value => 9)
+
+        member.test_value.all.should == [ value ]
+
+        member.bacon.create(:value => 4)
+        member.bacon.all.should == []
+      end
+
+      it 'should filter all hoards if no default_filter is specified' do
+        clazz = Class.new(Plyushkin::Test::Member) do
+          hoards :test_value
+          hoards :bacon
+          filter_hoards_by :filter_by
+
+          def filter_by(value)
+            value.value > 5
+          end
+        end
+
+        member = clazz.new
+        member.test_value.create(:value => 3)
+        value = member.test_value.create(:value => 9)
+
+        member.test_value.all.should == [ value ]
+
+        member.bacon.create(:value => 4)
+        member.bacon.all.should == []
+      end
+
+      it 'default_filter should override class level filter' do 
+        clazz = Class.new(Plyushkin::Test::Member) do
+          filter_hoards_by :filter_by
+          hoards :test_value
+          hoards :bacon, :default_filter => Proc.new {|v| v.value == 4}
+
+          def filter_by(value)
+            value.value > 5
+          end
+        end
+
+        member = clazz.new
+        member.test_value.create(:value => 3)
+        value = member.test_value.create(:value => 9)
+
+        member.test_value.all.should == [ value ]
+
+        bacon_value = member.bacon.create(:value => 4)
+        member.bacon.all.should ==  [ bacon_value ]
+
+      end
+
+      it 'default_filter should override class level filter' do 
+        clazz = Class.new(Plyushkin::Test::Member) do
+          hoards :test_value
+          hoards :bacon, :default_filter => Proc.new {|v| v.value == 4}
+          filter_hoards_by :filter_by
+
+          def filter_by(value)
+            value.value > 5
+          end
+        end
+
+        member = clazz.new
+        member.test_value.create(:value => 3)
+        value = member.test_value.create(:value => 9)
+
+        member.test_value.all.should == [ value ]
+
+        bacon_value = member.bacon.create(:value => 4)
+        member.bacon.all.should ==  [ bacon_value ]
+
+      end
+    end
+
     describe '#validates' do
       it 'should not be valid if hoarding property is not valid' do
         clazz = Class.new(Plyushkin::Test::Member) do

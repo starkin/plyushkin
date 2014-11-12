@@ -17,10 +17,11 @@ module PlyushkinExtensions
       end
     end
 
-    self.class.plyushkin_model.filters.each do |name, filter|
+    self.class.plyushkin_model.registered_types.each do |name, type|
+      filter = self.class.plyushkin_model.filters[name] || self.class.plyushkin_model.hoarding_filter
       plyushkin.register_filter(name) do |value|
         (filter && filter.is_a?(Symbol)) ? send(filter, value) : filter.call(value)
-      end
+      end if filter
     end
 
     plyushkin.load(id)

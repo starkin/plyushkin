@@ -12,6 +12,12 @@ ActiveRecord::Base.instance_eval do
     plyushkin_model.register_filter(name, opts[:default_filter]) if opts[:default_filter]
   end
 
+  def filter_hoards_by(filter)
+    initialize_plyushkin
+
+    plyushkin_model.hoarding_filter = filter
+  end
+
   def initialize_plyushkin
     class << self
       def plyushkin_model

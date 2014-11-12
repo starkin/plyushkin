@@ -1,5 +1,6 @@
 class Plyushkin::Model
   attr_reader :service, :name, :cache
+  attr_accessor :hoarding_filter
 
   def initialize(service, name, cache)
     raise Plyushkin::Error.new <<-ERROR unless service
