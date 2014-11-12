@@ -159,14 +159,14 @@ describe Plyushkin::Property do
     end
 
     it 'should apply a default filter, if defined' do
-      property = Plyushkin::Property.new(:property_name, :default_filter => Proc.new { |v| v.value > 5 })
+      property = Plyushkin::Property.new(:property_name, :filter => Proc.new { |v| v.value > 5 })
       value1 = property.create(:value => 5, :date => DateTime.now - 5.days)
       value2 = property.create(:value => 7, :date => DateTime.now - 7.days)
       property.all.should == [ value2 ]
     end
 
     it 'should return all data if :unfiltered => true' do
-      property = Plyushkin::Property.new(:property_name, :default_filter => Proc.new { |v| v.value > 5 })
+      property = Plyushkin::Property.new(:property_name, :filter => Proc.new { |v| v.value > 5 })
       value1 = property.create(:value => 5, :date => DateTime.now - 5.days)
       value2 = property.create(:value => 7, :date => DateTime.now - 7.days)
       property.all(:unfiltered => true).should == [ value2, value1 ]

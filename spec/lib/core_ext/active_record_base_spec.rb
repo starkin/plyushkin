@@ -104,10 +104,10 @@ describe ActiveRecord::Base do
 
     end
 
-    describe 'default_filter option' do
-      it 'should filter results when a default_filter is specified' do
+    describe 'filter option' do
+      it 'should filter results when a filter is specified' do
         clazz = Class.new(Plyushkin::Test::Member) do
-          hoards :test_value, :default_filter => Proc.new{ |v| v.value > 5 }
+          hoards :test_value, :filter => Proc.new{ |v| v.value > 5 }
         end
 
         member = clazz.new
@@ -117,9 +117,9 @@ describe ActiveRecord::Base do
         member.test_value.all.should == [ value ]
       end
 
-      it 'should filter results when a default_filter is specified as a symbol' do
+      it 'should filter results when a filter is specified as a symbol' do
         clazz = Class.new(Plyushkin::Test::Member) do
-          hoards :test_value, :default_filter => :filter_by
+          hoards :test_value, :filter => :filter_by
 
           def filter_by(value)
             value.value > 5
@@ -135,7 +135,7 @@ describe ActiveRecord::Base do
     end
 
     describe 'class level filter for plyushkin' do
-      it 'should filter all hoards if no default_filter is specified' do
+      it 'should filter all hoards if no filter is specified' do
         clazz = Class.new(Plyushkin::Test::Member) do
           filter_hoards_by :filter_by
           hoards :test_value
@@ -156,7 +156,7 @@ describe ActiveRecord::Base do
         member.bacon.all.should == []
       end
 
-      it 'should filter all hoards if no default_filter is specified' do
+      it 'should filter all hoards if no filter is specified' do
         clazz = Class.new(Plyushkin::Test::Member) do
           hoards :test_value
           hoards :bacon
@@ -177,11 +177,11 @@ describe ActiveRecord::Base do
         member.bacon.all.should == []
       end
 
-      it 'default_filter should override class level filter' do 
+      it 'filter should override class level filter' do 
         clazz = Class.new(Plyushkin::Test::Member) do
           filter_hoards_by :filter_by
           hoards :test_value
-          hoards :bacon, :default_filter => Proc.new {|v| v.value == 4}
+          hoards :bacon, :filter => Proc.new {|v| v.value == 4}
 
           def filter_by(value)
             value.value > 5
@@ -199,10 +199,10 @@ describe ActiveRecord::Base do
 
       end
 
-      it 'default_filter should override class level filter' do 
+      it 'filter should override class level filter' do 
         clazz = Class.new(Plyushkin::Test::Member) do
           hoards :test_value
-          hoards :bacon, :default_filter => Proc.new {|v| v.value == 4}
+          hoards :bacon, :filter => Proc.new {|v| v.value == 4}
           filter_hoards_by :filter_by
 
           def filter_by(value)

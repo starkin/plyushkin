@@ -124,7 +124,7 @@ To get the latest oil change details
     v.oil_change.last.mileage  # => 1234
     v.oil_change.last.oil_type # => '10W30'
 
-##### Specifiying a callback after a value is stored
+##### Specifying a callback after a value is stored
 
 When defining a hoards property, you can set a callback for after the value is persisted.  For example,
 if the vehicle table contains a `next_oil_change_mileage` column, we might want to update it whenever
@@ -138,6 +138,8 @@ an oil_change is saved.
         next_oil_change_mileage = oil_change.last.mileage + 3000
       end
     end
+
+##### Filters
 
 ##### Ignoring unchanged values
 

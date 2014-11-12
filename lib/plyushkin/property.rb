@@ -11,13 +11,13 @@ class Plyushkin::Property
     end unless last.valid?
   end
 
-  def initialize(name, opts={})
-    @values           = []
-    @value_type       = opts[:type]
-    @callbacks        = opts[:callbacks]
-    @default_filter   = opts[:default_filter]
+  def initialize(name, opts = {})
+    @values                  = []
+    @value_type              = opts[:type]
+    @callbacks               = opts[:callbacks]
+    @filter                  = opts[:default_filter]
     @ignore_unchanged_values = opts[:ignore_unchanged_values]
-    @name             = name.to_s
+    @name                    = name.to_s
   end
 
   def create(attr={})
@@ -44,7 +44,7 @@ class Plyushkin::Property
   end
 
   def all(opts = {})
-    (@default_filter && !opts[:unfiltered]) ? @values.select(&@default_filter) : @values
+    (@filter && !opts[:unfiltered]) ? @values.select(&@filter) : @values
   end
 
   def last
