@@ -24,9 +24,18 @@ module Plyushkin::Test
 
   class Plyushkin::Test::DateValue < Plyushkin::BaseValue
     persisted_attr :value, :formatter => :to_date
+    persisted_attr :is_deleted, :formatter => :to_bool
   end
 
   class Plyushkin::Test::ComplexModel < ActiveRecord::Base
     hoards :coordinate, :type => Plyushkin::Test::CoordinateValue
+  end
+
+  class Plyushkin::Test::FilteredModel < ActiveRecord::Base
+    hoards :is_deleted, :type => Plyushkin::Test::DateValue, :filter => :test_filter 
+    
+    def test_filter(value)
+      true
+    end
   end
 end
