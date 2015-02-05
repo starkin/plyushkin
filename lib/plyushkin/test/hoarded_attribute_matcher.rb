@@ -19,6 +19,11 @@ module Plyushkin::Test
       self
     end
 
+    def and_filter_by(sym)
+      matchers << FilterMatcher.new(@attribute, sym)
+      self
+    end
+
     def matches?(subject)
       unless subject.class.plyushkin_model.registered_types.keys.include?(@attribute)
         @failure_message          = "Plyushkin: does not hoard attribute #{@attribute}"
@@ -92,6 +97,29 @@ module Plyushkin::Test
 
       def message(negate)
         "Plyushkin:: Hoarded attribute #{@attr_name} #{negate ? "does not callback" : "calls back"} #{@callback}"
+      end
+    end
+
+    class FilterMatcher
+      def initialize(attr_name, filter)
+        @attr_name, @filter = attr_name, filter
+      end
+
+      def match(subject)
+        filters = subject.class.plyushkin_model.filters[@attr_name]
+        filters && (filters == @filter)
+      end
+
+      def failure_message
+        message(true)
+      end
+
+      def negative_failure_message
+        message(false)
+      end
+
+      def message(negate)
+        "Plyushkin:: Hoarded attribute #{@attr_name} #{negate ? "does not filter" : "filters"} using #{@filter}"
       end
     end
   end
