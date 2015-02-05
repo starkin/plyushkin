@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["craig@theisraels.net", "jchinkle@gmail.com"]
   spec.description   = %q{Provides active record extension to capture historical property data}
   spec.summary       = %q{Plyushkin - the attribute hoarder}
-  spec.homepage      = "http://github.com/OnlifeHealth/plyushkin"
+  spec.homepage      = "http://github.com/starkin/plyushkin"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
